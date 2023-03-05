@@ -18,7 +18,7 @@ import           Utilities            (wrap, writeValidatorToFile)
 
 -- We can create custom data types for our datum and redeemer like this:
 newtype MySillyRedeemer = MkMySillyRedeemer Integer
-PlutusTx.unstableMakeIsData ''MySillyRedeemer -- Use TH to create an instance for IsData.
+PlutusTx.unstableMakeIsData ''MySillyRedeemer -- Use TH to create an instance for IsData. ''quote a name
 
 -- This validator succeeds only if the redeemer is `MkMySillyRedeemer 42`
 --              Datum     Redeemer            ScriptContext

@@ -49,13 +49,14 @@ library
     import:             common-all
     hs-source-dirs:     lecture
                       , homework
-    exposed-modules:    Gift
-                      , Burn
-                      , FortyTwo
-                      , FortyTwoTyped
-                      , CustomTypes
-                      , Homework1
-                      , Homework2
+    exposed-modules:   
+    -- Gift
+                      -- , Burn
+                      -- , FortyTwo
+                      -- , FortyTwoTyped
+                      -- CustomTypes
+                       Homework1
+                     , Homework2
     build-depends:      utilities
 
 test-suite homework
