@@ -41,3 +41,9 @@ saveVal = writeValidatorToFile "./assets/week2_hw2.plutus" validator
 
 -- Homework2.wrappedVal (toBuiltinData ()) (toBuiltinData (MyRedeemer True True)) (toBuiltinData ())
 -- Homework2.wrappedVal (toBuiltinData ()) (toBuiltinData (MyRedeemer True False)) (toBuiltinData ())
+
+-- sc = ScriptContext (TxInfo {txInfoId="0x0001"}) (Spending (TxOutRef "0x0" 0))
+-- Homework2.mkValidator () (MyRedeemer True True) sc
+-- Homework2.mkValidator () (MyRedeemer True False) sc
+
+-- saveVal
