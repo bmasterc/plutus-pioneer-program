@@ -37,5 +37,4 @@ saveVal = writeValidatorToFile "./assets/week2_hw1.plutus" validator
 -- Homework1.mkValidator () (True, True) sc
 -- Homework1.mkValidator () (True, False) sc
 
-
 -- saveVal
