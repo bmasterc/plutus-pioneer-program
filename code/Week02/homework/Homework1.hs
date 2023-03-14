@@ -9,7 +9,7 @@ module Homework1 where
 import qualified Plutus.V2.Ledger.Api as PlutusV2
 import           PlutusTx             (compile)
 import           Prelude              (IO)
-import           PlutusTx.Prelude     (Bool (..), BuiltinData, Eq ((==)), traceIfFalse, ($))
+import           PlutusTx.Prelude     (Bool (..), BuiltinData, traceIfFalse, ($), (&&))
 import           Utilities            (wrap, writeValidatorToFile)
 
 ---------------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ import           Utilities            (wrap, writeValidatorToFile)
 
 -- This should validate if and only if the two Booleans in the redeemer are True!
 mkValidator :: () -> (Bool, Bool) -> PlutusV2.ScriptContext -> Bool
-mkValidator _ (firstBool, secondBool) _ = traceIfFalse "NOT TRUES" $ firstBool == (secondBool == True)
+mkValidator _ (firstBool, secondBool) _ = traceIfFalse "NOT TRUES" $ firstBool && secondBool
 {-# INLINABLE mkValidator #-}
 
 wrappedVal :: BuiltinData -> BuiltinData -> BuiltinData -> ()
@@ -30,6 +30,7 @@ validator = PlutusV2.mkValidatorScript $$(PlutusTx.compile [|| wrappedVal ||])
 saveVal :: IO ()
 saveVal = writeValidatorToFile "./assets/week2_hw1.plutus" validator
 
+-- import PlutusTx
 -- Homework1.wrappedVal (toBuiltinData ()) (toBuiltinData (True, True)) (toBuiltinData ())
 -- Homework1.wrappedVal (toBuiltinData ()) (toBuiltinData (True, False)) (toBuiltinData ())
 
