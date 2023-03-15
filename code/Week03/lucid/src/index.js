@@ -20,17 +20,20 @@ function removeChildren(elt) {
 }
 
 async function loadCardano() {
+    logStatus(`Loading Wallet`);
     const nami = window.cardano.nami;
     if (!nami) {
         setTimeout(loadCardano);
     } else {
         const api = await nami.enable();
         console.log('nami enabled');
+        logStatus(`Nami Enabled`);
         const lucid = await L.Lucid.new(
             new L.Blockfrost("https://cardano-preview.blockfrost.io/api/v0", "preview7JolCEjrfmPx8l4gVfIAEb50FAIDvtLr"),
             "Preview",
         );
         console.log('lucid active');
+        logStatus(`Lucid Active`);
         lucid.selectWallet(api);
         return lucid;
     }
@@ -108,6 +111,13 @@ function addCopyCell(row, text) {
     button.addEventListener("click", () => onCopy(uid));
 }
 
+function logStatus(message) {
+    const div = document.createElement("div");
+    div.appendChild(document.createTextNode(message));
+    const status = document.getElementById('status');
+    status.prepend(div);
+}
+
 async function setStatus() {
     const status = await getStatus();
 
@@ -123,6 +133,9 @@ async function setStatus() {
     const vestingUTxOsTable = document.getElementById('vestingUTxOsTable');
     removeChildren(vestingUTxOsTable);
     for (const x of status.vestingUTxOs) {
+       if (status.cardanoPKH != x.datum.beneficiary)
+            continue;
+
         const tr = document.createElement('tr');
         vestingUTxOsTable.appendChild(tr);
 
