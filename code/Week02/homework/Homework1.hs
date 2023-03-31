@@ -10,7 +10,7 @@ import qualified Plutus.V2.Ledger.Api as PlutusV2
 import           PlutusTx             (compile)
 import           Prelude              (IO)
 import           PlutusTx.Prelude     (Bool (..), BuiltinData, traceIfFalse, ($), (&&))
-import           Utilities            (wrap, writeValidatorToFile)
+import           Utilities            (wrapValidator, writeValidatorToFile)
 
 ---------------------------------------------------------------------------------------------------
 ----------------------------------- ON-CHAIN / VALIDATOR ------------------------------------------
@@ -21,8 +21,7 @@ mkValidator _ (firstBool, secondBool) _ = traceIfFalse "NOT TRUES" $ firstBool &
 {-# INLINABLE mkValidator #-}
 
 wrappedVal :: BuiltinData -> BuiltinData -> BuiltinData -> ()
-wrappedVal = wrap mkValidator
-{-# INLINABLE wrappedVal #-}
+wrappedVal = wrapValidator mkValidator
 
 validator :: PlutusV2.Validator
 validator = PlutusV2.mkValidatorScript $$(PlutusTx.compile [|| wrappedVal ||])

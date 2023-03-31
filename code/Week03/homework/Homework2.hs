@@ -15,6 +15,7 @@ import           PlutusTx.Prelude     (Bool, (.), traceIfFalse, ($), (&&))
 import           Utilities            (wrap)
 import Plutus.V2.Ledger.Contexts (txSignedBy)
 import Plutus.V1.Ledger.Interval
+import           Utilities            (wrapValidator)
 
 ---------------------------------------------------------------------------------------------------
 ----------------------------------- ON-CHAIN / VALIDATOR ------------------------------------------
@@ -37,7 +38,7 @@ mkParameterizedVestingValidator _beneficiary _deadline () _ctx =
 
 {-# INLINABLE  mkWrappedParameterizedVestingValidator #-}
 mkWrappedParameterizedVestingValidator :: PubKeyHash -> BuiltinData -> BuiltinData -> BuiltinData -> ()
-mkWrappedParameterizedVestingValidator = wrap . mkParameterizedVestingValidator
+mkWrappedParameterizedVestingValidator = wrapValidator . mkParameterizedVestingValidator
 
 validator :: PubKeyHash -> Validator
 validator beneficiary = mkValidatorScript ($$(compile [|| mkWrappedParameterizedVestingValidator ||]) `applyCode` liftCode beneficiary)

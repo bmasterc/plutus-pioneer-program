@@ -13,7 +13,7 @@ import           Plutus.V2.Ledger.Api (BuiltinData, POSIXTime, PubKeyHash,
                                        mkValidatorScript, TxInfo (txInfoValidRange), from, to, ivTo, UpperBound (UpperBound), Extended (Finite, NegInf), singleton, Interval (Interval, ivTo), LowerBound (LowerBound))
 import           PlutusTx             (compile, unstableMakeIsData)
 import           PlutusTx.Prelude     (Bool (..), traceIfFalse, (||), (&&), ($), not, (+), Ord ((<)), Maybe (Nothing, Just))
-import           Utilities            (wrap)
+import           Utilities            (wrapValidator)
 import Plutus.V2.Ledger.Contexts (txSignedBy)
 import Plutus.V1.Ledger.Interval (contains, before, after, overlaps, never)
 import Prelude (odd)
@@ -71,7 +71,7 @@ mkVestingValidator _dat () _ctx =  traceIfFalse "Someone Has to Sign!" (benefici
 
 {-# INLINABLE  mkWrappedVestingValidator #-}
 mkWrappedVestingValidator :: BuiltinData -> BuiltinData -> BuiltinData -> ()
-mkWrappedVestingValidator = wrap mkVestingValidator
+mkWrappedVestingValidator = wrapValidator mkVestingValidator
 
 validator :: Validator
 validator = mkValidatorScript $$(compile [|| mkWrappedVestingValidator ||])
