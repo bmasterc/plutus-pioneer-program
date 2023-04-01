@@ -9,11 +9,11 @@ module Homework2 where
 
 import           Plutus.V1.Ledger.Interval (contains)
 import           Plutus.V2.Ledger.Api
-import           Plutus.V2.Ledger.Contexts (txSignedBy)
-import           PlutusTx                  (applyCode, compile, liftCode)
-import           PlutusTx.Prelude          (Bool (..), traceIfFalse, (&&), (.))
-import           Prelude                   (IO)
-import           Utilities                 (wrapValidator, writeValidatorToFile)
+import           Plutus.V2.Ledger.Contexts  (txSignedBy)
+import           PlutusTx                   (applyCode, compile, liftCode)
+import           PlutusTx.Prelude           (Bool (..), (.), traceIfFalse, (&&), ($))
+import           Utilities                  (wrapValidator, writeValidatorToFile, bytesFromHex)
+import           Prelude                    (IO)
 
 ---------------------------------------------------------------------------------------------------
 ------------------------------------------ PROMPT -------------------------------------------------
@@ -60,3 +60,6 @@ validator beneficiary = mkValidatorScript ($$(compile [|| mkWrappedParameterized
 
 saveVal :: PubKeyHash -> IO ()
 saveVal = writeValidatorToFile "./assets/parameterized-Mistery.plutus" . validator
+
+savit :: IO ()
+savit = saveVal $ PubKeyHash $ toBuiltin $ bytesFromHex "afa75ddf3370b8ecc5fa6d9f155a8ac6d718a04ae6728a03f4badb1a" -- Nami wallet
